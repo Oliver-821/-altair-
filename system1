@@ -1,0 +1,111 @@
+import pandas as pd
+import altair as alt
+import seaborn as sns
+#Relative paths in Python
+# Wine quality set in UCI Machine Learning Repository      URL：http://archive.ics.uci.edu/ml/datasets/Wine+Quality
+redWine = pd.read_csv('winequalityred.csv')
+whiteWine = pd.read_csv('winequalitywhite.csv')
+# Summed the two data into one file
+redAndWhite =  pd.read_csv('redAndWhite.csv')
+
+#TASK1
+# To find out if there is one types of wines has higher quality. 
+# This task tries to find out some thing that not be found before, and just compare the quality score of red and white wines.
+#Histogram showing two wine distributions, with quality on the x-axis and the number of samples of different quality on the y-axis.
+# title="Red and white wine quality distribution"
+alt.data_transformers.disable_max_rows()
+alt.Chart(redAndWhite).mark_bar().encode(
+    x='quality',
+    y='count(type)',
+    color='type',
+    column='type'
+)
+
+#TASK2
+# Do white wines with a sweeter taste receive higher quality score? A sweeter taste means more amount of residual sugar
+# this task is to find the relationship between residual sugar and quality score.
+#Observe the distribution using a scatter plot with the x-axis as quality and the y-axis as the amount of residual sugar
+#This task studies white wine, use the whiteWine dataset
+#The maximum limit for this library is 5000 rows, our data is nearly 7000, so we have to ignore the limit
+alt.data_transformers.disable_max_rows()
+# Configure the options common to all layers
+brush = alt.selection(type='interval')
+#redAndWhite.sample(n=100)    It is possible to take only 100 data to see the shape and zoom in to see each data point
+base = alt.Chart(whiteWine).add_selection(brush).interactive()
+# Configure the points
+points = base.mark_point().encode(
+    x=alt.X('residual_sugar', title=''),
+    y=alt.Y('quality', title=''),
+    color=alt.condition(brush, 'type', alt.value('grey'))
+)
+# Configure the ticks
+tick_axis = alt.Axis(labels=False, domain=False, ticks=False)
+
+x_ticks = base.mark_tick().encode(
+    alt.X('residual_sugar', axis=tick_axis),
+    alt.Y('type', title='', axis=tick_axis),
+    color=alt.condition(brush, 'type', alt.value('lightgrey'))
+)
+
+y_ticks = base.mark_tick().encode(
+    alt.X('type', title='', axis=tick_axis),
+    alt.Y('quality', axis=tick_axis),
+    color=alt.condition(brush, 'type', alt.value('lightgrey'))
+)
+# Build the chart
+y_ticks | (points & x_ticks)
+
+
+
+#TASK3
+# Do white wines with high quality rating have higher alcohol and a sweeter taste?
+# This task is to find out the relationship between the amount of alcohol, residual sugar and the score of quality.
+#This task studies white wine, the whiteWine dataset
+#title="Relationship between alcohol, residual sugar and quality"
+chart = alt.Chart(whiteWine).mark_circle().encode(
+    alt.X(alt.repeat("column"), type='quantitative'),
+    alt.Y(alt.repeat("row"), type='quantitative'),
+   # color='Origin:N'
+).properties(
+    width=250,
+    height=250
+   # title='Cars Data'
+).repeat(
+    row=['residual_sugar', 'quality', 'alcohol'],
+    column=['alcohol', 'quality', 'residual_sugar']
+)#.interactive()
+
+
+#TASK4
+# When the quality score is high, which range the pH value is concentrated in? 
+# This task is to compare the distribution of these two attributes, and observe the similarities and differences.
+#This task studies red wine, the red Wine dataset
+#Tasks two and four appear to have been studied in the same way, but the visualisation shows that there is little relationship between ph and wine quality in task four
+alt.data_transformers.disable_max_rows()
+
+brush = alt.selection(type='interval')
+base = alt.Chart(redWine).add_selection(brush).interactive()    #   [redWine['quality']<7]
+points = base.mark_point().encode(
+    x=alt.X('pH', title=''),
+    y=alt.Y('quality', title=''),
+    color=alt.condition(brush, 'type', alt.value('grey'))
+)
+
+
+tick_axis = alt.Axis(labels=False, domain=False, ticks=False)
+
+x_ticks = base.mark_tick().encode(
+    alt.X('pH', axis=tick_axis),
+    alt.Y('type', title='', axis=tick_axis),
+    color=alt.condition(brush, 'type', alt.value('lightgrey'))
+)
+
+y_ticks = base.mark_tick().encode(
+    alt.X('type', title='', axis=tick_axis),
+    alt.Y('quality', axis=tick_axis),
+    color=alt.condition(brush, 'type', alt.value('lightgrey'))
+)
+
+
+# Build the chart
+y_ticks | (points & x_ticks)
