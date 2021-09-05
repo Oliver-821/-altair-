@@ -1,0 +1,12 @@
+➢ 通过 list、numpy和字典创建dataframe
+➢ 查看数据： dataframe.head（头）， dataframe.tail（尾）,dataframe.describe（数据统计汇总 ）， dataframe.column（列）, dataframe.index（索引 ）， dataframe.values（值）
+➢ 数据的选择 :datafame[‘column_name’]，返回一行series值，dataframe[start:end] 返回数据切片 ,dataframe.loc[row,column]返回数据切片
+➢ 数据的选择 :dataframe[(datafame.A > 0) & (datafame.B > 0])]，
+➢ data[dara[‘column_name’].isin([A,B,C,D])]
+➢ 数据的设置 ：通过列和 loc函数设置数值
+➢ 处理缺失值 处理缺失值 ：fillna和 dropna
+➢ 直方图 可视化 可视化 :dataframe.hist
+➢ 数据的合并 ：merge（类似数据的连接）、 concat（基于轴的拼接） 
+
+
+pandas    https://www.cnblogs.com/chaosimple/p/4153083.html
