@@ -1,5 +1,5 @@
-//////////////////////////////
-方法
+///////////方法///////////////////
+
 def append_element(listA,content)
     listA.append(content)
   
@@ -13,14 +13,14 @@ def add_and_maybe_multiply(a, b, c=None):
     result = a + b
 
 
-///////////////////////////////
+////////////类似于java private protected public///////////////////
 从同目录下的另一个文件访问some_module.py中定义的变量和函数，可以：
 import some_module
 result = some_module.f(5)
 pi = some_module.PI                      ;有其他方法，但是最好还是加上some_module，不然容易搞不清楚哪儿来的变量
 
 
-/////////////////////////////////
+/////////////数据类型和数据结构////////////////////
 Python中的大多数对象，比如列表、字典、NumPy数组，和用户定义的类型（类），都是可变的。意味着这些对象或包含的值可以被修改：
 ##LIST
 nums = [10, 20, 30, 40, 50, 60, 70, 80, 90]
@@ -28,6 +28,13 @@ print(nums[0:4])
 print(nums[0]) 
 del nums[2]
 nums.append(1000)
+
+b_list.insert(1, 'red')                                  ;在列表b的1的这个位置插入’red‘['foo', 'red', 'peekaboo', 'baz', 'dwarf']
+b_list.pop(2)                                           ;insert逆运算pop
+'dwarf' in b_list                                       ;返回true or false
+
+ a = [7, 2, 5, 1, 3]
+ a.sort()                                                ;排序，可以查sort的api
 
 ##TUPLE不可修改，但是两个tuple可以结合成一个新的
 tup1 = (12, 34.56)
