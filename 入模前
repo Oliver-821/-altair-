@@ -10,3 +10,19 @@
 
 
 pandas    https://www.cnblogs.com/chaosimple/p/4153083.html
+
+
+
+
+去除字符串中的空格，特殊符号
+import re
+states = ['   Alabama ', 'Georgia!', 'Georgia', 'georgia', 'FlOrIda','south   carolina##', 'West virginia?']
+def clean_strings(strings):
+    result = []
+    for value in strings:  
+        value = value.strip()      ;strip只能删除开头或是结尾的字符，不能删除中间部分的字符。
+        value = re.sub('[!#?]', '', value)
+        value = value.title()
+        result.append(value)
+    return result
+print(clean_strings(states))
